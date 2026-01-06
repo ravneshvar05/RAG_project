@@ -1,7 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path("data.db")
+DB_PATH = Path("chunkdata.db")
 
 
 def get_connection():
@@ -15,7 +15,7 @@ def init_db():
 
     cursor.execute(
         """
-        CREATE TABLE IF NOT EXISTS chunks (
+        CREATE TABLE IF NOT EXISTS documents (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             document TEXT NOT NULL,
             chunk_id INTEGER NOT NULL,

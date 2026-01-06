@@ -9,7 +9,7 @@ def insert_chunk(document: str, chunk_id: int, text: str, embedding: np.ndarray)
 
     cursor.execute(
         """
-        INSERT INTO chunks (document, chunk_id, text, embedding)
+        INSERT INTO documents (document, chunk_id, text, embedding)
         VALUES (?, ?, ?, ?)
         """,
         (
@@ -26,23 +26,27 @@ def insert_chunk(document: str, chunk_id: int, text: str, embedding: np.ndarray)
 
 def fetch_all_chunks():
     conn = get_connection()
+    conn.row_factory = sqlite3.Row  # IMPORTANT
     cursor = conn.cursor()
 
-    cursor.execute(
-        "SELECT document, chunk_id, text, embedding FROM chunks"
-    )
+    cursor.execute("""
+        SELECT document, chunk_id, text, embedding
+        FROM documents
+    """)
 
     rows = cursor.fetchall()
     conn.close()
 
-    results = []
-    for document, chunk_id, text, embedding_blob in rows:
-        embedding = np.frombuffer(embedding_blob, dtype=np.float32)
-        results.append({
-            "document": document,
-            "chunk_id": chunk_id,
-            "text": text,
+    chunks = []
+
+    for row in rows:
+        embedding = np.frombuffer(row["embedding"], dtype=np.float32)
+
+        chunks.append({
+            "document": row["document"],
+            "chunk_id": row["chunk_id"],
+            "text": row["text"],
             "embedding": embedding
         })
 
-    return results
+    return chunks

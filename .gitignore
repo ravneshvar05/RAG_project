@@ -13,6 +13,11 @@ __pycache__/
 *.sqlite
 *.duckdb
 
-# OS / editor noise (optional but clean)
+# OS / editor noise
 .DS_Store
 .vscode/
+
+uploaded_docs/
+sample.txt
+test.py
+init_db.py
