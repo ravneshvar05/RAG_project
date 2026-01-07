@@ -1,5 +1,3 @@
-# core/qa_pipeline.py
-
 from core.retrieval import retrieve_top_k  # your cosine similarity retrieval
 from llm.prompt import build_prompt
 from llm.client import generate_answer
@@ -14,7 +12,7 @@ def answer_question(question: str, k: int = 3) -> dict:
     - Collect evidence
     """
 
-    # 1️⃣ Retrieve top-k chunks
+    # Retrieve top-k chunks
     top_chunks = retrieve_top_k(question, k=k)
 
     if not top_chunks:
@@ -25,23 +23,23 @@ def answer_question(question: str, k: int = 3) -> dict:
             "evidence": []
         }
 
-    # 2️⃣ Build prompt
+    # Build prompt
     chunk_texts = [c["text"] for c in top_chunks]
     prompt = build_prompt(question, chunk_texts)
 
-    # 3️⃣ Generate answer
+    # Generate answer
     answer = generate_answer(prompt)
 
-    # 4️⃣ Compute confidence (average similarity of top-k chunks)
+    # Compute confidence (average similarity of top-k chunks)
     avg_similarity = sum(c["similarity"] for c in top_chunks) / len(top_chunks)
 
-    # 5️⃣ Collect evidence
+    # Collect evidence
     evidence = [
         {"document": c["document"], "chunk_id": c["chunk_id"], "text": c["text"]}
         for c in top_chunks
     ]
 
-    # 6️⃣ Prepare final response
+    # Prepare final response
     response = {
         "question": question,
         "answer": answer,

@@ -1,5 +1,3 @@
-# core/retrieval.py
-
 from core.embeddings import embed_text
 from core.similarity import cosine_similarity
 from db.crud import fetch_all_chunks

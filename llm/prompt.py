@@ -1,5 +1,3 @@
-# llm/prompt.py
-
 def build_prompt(question: str, chunks: list[str]) -> str:
     context = "\n\n".join([f"Context {i+1}:\n{chunk}" for i, chunk in enumerate(chunks)])
     prompt = f"""

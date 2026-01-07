@@ -1,8 +1,6 @@
-# llm/client.py
-
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-# Local model path / Hugging Face model name
+
 MODEL_NAME = "google/flan-t5-base"
 
 print("Loading FLAN-T5 model... This may take 10-20s on first run.")
@@ -19,7 +17,7 @@ def generate_answer(prompt: str) -> str:
     )
     decoded = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    # Strip repeated "Answer:" or trailing colons
+
     for prefix in ["Answer:", "answer:"]:
         if decoded.lower().startswith(prefix.lower()):
             decoded = decoded[len(prefix):].strip()

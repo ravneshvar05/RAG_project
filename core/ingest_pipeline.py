@@ -1,4 +1,3 @@
-# core/ingest_pipeline.py
 
 from core.ingestion import load_text_file
 from core.chunking import semantic_chunk
@@ -7,7 +6,7 @@ from db.crud import insert_chunk
 from db.database import init_db
 
 def ingest_document(file_path: str):
-    # Ensure DB is ready
+    
     init_db()
 
     data = load_text_file(file_path)

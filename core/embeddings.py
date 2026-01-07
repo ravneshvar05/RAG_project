@@ -1,7 +1,7 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-# Load model ONCE (important for performance)
+
 _MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 _model = SentenceTransformer(_MODEL_NAME)
 

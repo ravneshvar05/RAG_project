@@ -1,23 +1,18 @@
-# api/main.py
-
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
 from pathlib import Path
 import shutil
 
-from core.ingest_pipeline import ingest_document  # ✅ updated function name
+from core.ingest_pipeline import ingest_document  
 from core.qa_pipeline import answer_question
 
 app = FastAPI(title="RAG QA System")
 
-# Directory to store uploaded documents
 UPLOAD_DIR = Path("uploaded_docs")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 
-# -------------------------------
-# POST /ingest
-# -------------------------------
+
 @app.get("/")
 def hello():
     return {"message": "Welcome to the RAG QA System API"}
@@ -34,15 +29,13 @@ async def upload_document(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, f)
 
     try:
-        chunks_added = ingest_document(file_path)  # ✅ use correct function name
+        chunks_added = ingest_document(file_path)  
         return {"status": "success", "document": file.filename, "chunks_added": chunks_added}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ingest pipeline error: {str(e)}")
 
 
-# -------------------------------
-# POST /ask
-# -------------------------------
+
 @app.post("/ask")
 async def ask_question(question: str):
     """
@@ -58,9 +51,7 @@ async def ask_question(question: str):
         raise HTTPException(status_code=500, detail=f"QA pipeline error: {str(e)}")
 
 
-# -------------------------------
-# GET /health
-# -------------------------------
+
 @app.get("/health")
 async def health_check():
     """
