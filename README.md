@@ -1,3 +1,15 @@
+---
+title: RAG FastAPI Backend
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_file: Dockerfile
+pinned: false
+---
+
+
+
 Retrieval-Augmented Question Answering System (RAG Backend) :-
 
 This project implements a document ingestion and question-answering backend using FastAPI, Hugging Face models, and a traditional relational database (SQLite) — without using any vector databases.
@@ -25,11 +37,10 @@ Each paragraph is then split into sentences using punctuation-aware rules.
 Sentences are grouped into fixed-size semantic windows of 3 sentences per chunk.
 
 Why this works :-
-Avoids naïve line-based or character-based splitting
+Avoids simple line-based or character-based splitting
 Preserves semantic continuity across related sentences
 Deterministic and fast
 Easy to debug and reason about
-Commonly used in production-grade RAG pipelines
 
 Stored fields per chunk:-
 document: original uploaded filename
@@ -44,9 +55,7 @@ Why this model:-
 Lightweight (~80MB)
 CPU-friendly (no GPU required)
 High-quality sentence-level semantic representations
-Widely adopted in industry and research
 Ideal for similarity search and retrieval tasks
-Execution Strategy
 Embeddings are generated locally using PyTorch
 TensorFlow/Keras dependencies are avoided to ensure stability
 This reduces unnecessary dependencies and compatibility issues
