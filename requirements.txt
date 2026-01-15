@@ -8,7 +8,6 @@ requests
 python-dotenv
 python-multipart
 pydantic
-mysql-connector-python
 sqlalchemy
 mysqlclient
 pymysql
