@@ -1,10 +1,12 @@
-title: RAG FastAPI Backend
-emoji: 🧠
-colorFrom: blue
-colorTo: indigo
+---
+title: RAG QA System
+emoji: 🤖
+colorFrom: purple
+colorTo: blue
 sdk: docker
 app_file: Dockerfile
 pinned: false
+---
 
 
 
