@@ -29,4 +29,6 @@ test.py
 init_db.py
 sample.txt
 uploaded_docs/
+test_crud.py
+test_db_connection.py
 

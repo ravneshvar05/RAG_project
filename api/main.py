@@ -5,6 +5,7 @@ import shutil
 
 from core.ingest_pipeline import ingest_document  
 from core.qa_pipeline import answer_question
+from db.database import get_connection
 
 app = FastAPI(title="RAG QA System")
 
@@ -52,22 +53,29 @@ async def ask_question(question: str):
 
 
 
+
 @app.get("/health")
 async def health_check():
     """
     Check system status:
-    - Database file exists
-    - LLM is loaded
+    - Can connect to MySQL
+    - LLM import works
     """
     try:
-        db_exists = Path("chunkdata.db").exists()
-        llm_loaded = True  # assume LLM is loaded if no errors in import
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1")
+        conn.close()
 
-        status = "ok" if db_exists and llm_loaded else "error"
         return {
-            "status": status,
-            "db_exists": db_exists,
-            "llm_loaded": llm_loaded
+            "status": "ok",
+            "database": "connected",
+            "llm_loaded": True
         }
+
     except Exception as e:
-        return {"status": "error", "detail": str(e)}
+        return {
+            "status": "error",
+            "database": "not connected",
+            "detail": str(e)
+        }

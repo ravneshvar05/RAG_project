@@ -1,4 +1,3 @@
-import sqlite3
 import numpy as np
 from db.database import get_connection
 
@@ -10,7 +9,7 @@ def insert_chunk(document: str, chunk_id: int, text: str, embedding: np.ndarray)
     cursor.execute(
         """
         INSERT INTO documents (document, chunk_id, text, embedding)
-        VALUES (?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s)
         """,
         (
             document,
@@ -26,13 +25,14 @@ def insert_chunk(document: str, chunk_id: int, text: str, embedding: np.ndarray)
 
 def fetch_all_chunks():
     conn = get_connection()
-    conn.row_factory = sqlite3.Row  # IMPORTANT
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT document, chunk_id, text, embedding
         FROM documents
-    """)
+        """
+    )
 
     rows = cursor.fetchall()
     conn.close()
