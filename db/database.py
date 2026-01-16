@@ -12,12 +12,12 @@ DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_USER = os.getenv("DB_USER", "root")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 DB_NAME = os.getenv("DB_NAME", "defaultdb")
-
-# DB_PORT: convert to int, default 3306 if missing or invalid
-try:
-    DB_PORT = int(os.getenv("DB_PORT", 3306))
-except (TypeError, ValueError):
-    DB_PORT = 3306
+DB_PORT = os.getenv("DB_PORT")
+# # DB_PORT: convert to int, default 3306 if missing or invalid
+# try:
+#     DB_PORT = int(os.getenv("DB_PORT", 3306))
+# except (TypeError, ValueError):
+#     DB_PORT = 3306
 
 def get_connection():
     """
